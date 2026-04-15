@@ -76,7 +76,7 @@ void SKATExactBin_ComputeProb_Group(arma::uvec & idx, arma::uvec & idxCompVec, a
 }
 
 
-int fact(int n) {
+unsigned long long fact(int n) {
 	if (n == 0 || n == 1){
    		return 1;
 	}else{
@@ -85,8 +85,13 @@ int fact(int n) {
 }
 
 int n_choose_r(int n, int r){
-	int comb;
-	comb = fact(n) / (fact(r) * fact(n-r));	
+	if (r == 0) return 1;
+	if (r > n / 2) return n_choose_r(n, n - r);
+	long comb = 1;
+	for (int k = 1; k <= r; ++k) {
+		comb *= n - k + 1;
+		comb /= k;
+	}
 	return(comb);
 }
 
